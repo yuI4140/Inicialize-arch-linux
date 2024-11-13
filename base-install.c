@@ -62,30 +62,7 @@ int configure_grub(const char *disk_name) {
     }
     return 0;
 }
-
 int main(void) {
-    Nob_File_Paths mnt_dir = {0};
-
-    if (!nob_read_entire_dir("/mnt", &mnt_dir)) {
-        color_printf(COLOR_RED, "Partitions not found. Set up your partitions.\n");
-        color_printf(COLOR_YELLOW, "Recommended: cfdisk.\n");
-        return 1;
-    }
-
-    if (install_core_packages()) {
-        return 1;
-    }
-
-    color_printf(COLOR_GREEN, "Saving fstab into /mnt/etc/fstab...\n");
-    if (execute_command("genfstab /mnt > /mnt/etc/fstab", "Failed to generate fstab.")) {
-        return 1;
-    }
-
-    color_printf(COLOR_GREEN, "Changing root...\n");
-    if (execute_command("arch-chroot /mnt", "Failed to change root.")) {
-        return 1;
-    }
-
     color_printf(COLOR_GREEN, "Adjusting the time...\n");
     if (execute_command("hwclock --systohc", "Failed to adjust the system clock.")) {
         return 1;
