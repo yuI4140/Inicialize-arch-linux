@@ -73,27 +73,20 @@ int main(void) {
         return 1;
     }
     char *set_user = nob_temp_sprintf("useradd -G wheel -m %s", username);
-    if (execute_command(set_user, "Failed to create user.")) {
-        return 1;
-    }
+    execute_command(set_user, "Failed to create user.");
     char *set_password = nob_temp_sprintf("passwd %s", username);
     if (execute_command(set_password, "Failed to set user password.")) {
         return 1;
     }
-
     char timezone[256];
     if (get_user_input("Enter your timezone (Syntax: Continent/City): ", timezone, sizeof(timezone))) {
         return 1;
     }
     char *set_timezone = nob_temp_sprintf("ln -sf /usr/share/zoneinfo/%s /etc/localtime", timezone);
-    if (execute_command(set_timezone, "Failed to set timezone.")) {
-        return 1;
-    }
+    execute_command(set_timezone, "Failed to set timezone.");
 
     color_printf(COLOR_GREEN, "Enabling NetworkManager...\n");
-    if (execute_command("systemctl enable NetworkManager", "Failed to enable NetworkManager.")) {
-        return 1;
-    }
+    execute_command("systemctl enable NetworkManager", "Failed to enable NetworkManager.");
 
     char disk_name[256];
     if (get_user_input("Enter your disk name (e.g., /dev/sda): ", disk_name, sizeof(disk_name))) {
