@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #define NOB_IMPLEMENTATION
-#include "nob.h/nob.h"
+#include "./nob.h"
 
 // ANSI color codes
 #define COLOR_RESET "\033[0m"
